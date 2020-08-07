@@ -1,5 +1,6 @@
 package cf.lucasmellof.senior
 
+import cf.lucasmellof.senior.core.manager.EventManager
 import com.jagrosh.jdautilities.waiter.EventWaiter
 import me.devoxin.flight.api.CommandClient
 import me.devoxin.flight.api.CommandClientBuilder
@@ -40,6 +41,7 @@ object Music {
     private fun loadShardManager() {
         shardManager = DefaultShardManagerBuilder.create(EnumSet.allOf(GatewayIntent::class.java))
             .setToken("")
+            .addEventListeners(commandClient, EventManager(), eventWaiter)
             .build()
     }
 
