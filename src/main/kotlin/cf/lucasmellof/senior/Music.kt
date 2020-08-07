@@ -1,6 +1,7 @@
 package cf.lucasmellof.senior
 
 import cf.lucasmellof.senior.core.manager.EventManager
+import cf.lucasmellof.senior.core.manager.music.MusicManager
 import com.jagrosh.jdautilities.waiter.EventWaiter
 import me.devoxin.flight.api.CommandClient
 import me.devoxin.flight.api.CommandClientBuilder
@@ -16,6 +17,7 @@ object Music {
     lateinit var shardManager: ShardManager
     lateinit var commandClient: CommandClient
     lateinit var eventWaiter: EventWaiter
+    lateinit var musicManager: MusicManager
 
     val shardCount by lazy {
         shardManager.shardsTotal
@@ -34,6 +36,7 @@ object Music {
     fun main(args: Array<String>) {
         setupFlight()
         setupEventWaiter()
+        setupAudio()
         loadShardManager()
 
     }
@@ -59,5 +62,9 @@ object Music {
 
     private fun setupEventWaiter() {
         eventWaiter = EventWaiter()
+    }
+
+    private fun setupAudio() {
+        musicManager = MusicManager()
     }
 }
