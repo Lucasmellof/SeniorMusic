@@ -1,0 +1,17 @@
+<configuration debug="false">
+    <logger name="org.mongodb.driver.cluster" level="ERROR"/>
+    <logger name="org.mongodb.driver.connection" level="ERROR"/>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>DEBUG</level>
+        </filter>
+        <encoder>
+            <pattern>%boldMagenta([%d{HH:mm:ss}]) [%green(%t)/%highlight(%level)] %boldBlue([%logger{0}]): %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>
