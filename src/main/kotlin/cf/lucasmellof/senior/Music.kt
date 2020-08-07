@@ -1,5 +1,6 @@
 package cf.lucasmellof.senior
 
+import com.jagrosh.jdautilities.waiter.EventWaiter
 import me.devoxin.flight.api.CommandClient
 import me.devoxin.flight.api.CommandClientBuilder
 import net.dv8tion.jda.api.requests.GatewayIntent
@@ -13,6 +14,7 @@ import java.util.*
 object Music {
     lateinit var shardManager: ShardManager
     lateinit var commandClient: CommandClient
+    lateinit var eventWaiter: EventWaiter
 
     val shardCount by lazy {
         shardManager.shardsTotal
@@ -30,6 +32,7 @@ object Music {
     @JvmStatic
     fun main(args: Array<String>) {
         setupFlight()
+        setupEventWaiter()
         loadShardManager()
 
     }
@@ -50,5 +53,9 @@ object Music {
             .build()
         commandClient.commands.register("cf.lucasmellof.senior.commands")
         commandClient.commands
+    }
+
+    private fun setupEventWaiter() {
+        eventWaiter = EventWaiter()
     }
 }
