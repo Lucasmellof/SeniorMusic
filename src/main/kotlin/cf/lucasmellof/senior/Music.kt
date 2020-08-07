@@ -1,5 +1,7 @@
 package cf.lucasmellof.senior
 
+import me.devoxin.flight.api.CommandClient
+import me.devoxin.flight.api.CommandClientBuilder
 import net.dv8tion.jda.api.requests.GatewayIntent
 import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder
 import net.dv8tion.jda.api.sharding.ShardManager
@@ -10,6 +12,7 @@ import java.util.*
  */
 object Music {
     lateinit var shardManager: ShardManager
+    lateinit var commandClient: CommandClient
 
     val shardCount by lazy {
         shardManager.shardsTotal
@@ -26,6 +29,7 @@ object Music {
     @ExperimentalStdlibApi
     @JvmStatic
     fun main(args: Array<String>) {
+        setupFlight()
         loadShardManager()
 
     }
@@ -36,4 +40,15 @@ object Music {
             .build()
     }
 
+    @ExperimentalStdlibApi
+    fun setupFlight() {
+        commandClient = CommandClientBuilder()
+            .setPrefixes("!")
+            .registerDefaultParsers()
+            .setOwnerIds("")
+            .configureDefaultHelpCommand { enabled = false }
+            .build()
+        commandClient.commands.register("cf.lucasmellof.senior.commands")
+        commandClient.commands
+    }
 }
