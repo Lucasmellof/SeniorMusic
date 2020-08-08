@@ -10,14 +10,14 @@ import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack
+import net.dv8tion.jda.api.entities.Member
 import net.dv8tion.jda.api.entities.Message
 import net.dv8tion.jda.api.entities.TextChannel
-import net.dv8tion.jda.api.entities.User
 import java.util.concurrent.Future
 import java.util.concurrent.TimeUnit
 
 class AudioLoader(
-    val user: User,
+    val user: Member,
     private val channel: TextChannel,
     private val msg: Message,
     private val search: String,
@@ -81,6 +81,7 @@ class AudioLoader(
                 exception!!.message
             )
         ).queue()
+        Music.musicManager.getMusicManager(channel.guild).trackScheduler.startNext(false)
         queuedSongs--
     }
 
@@ -127,7 +128,7 @@ class AudioLoader(
     private fun onSearch(playlist: AudioPlaylist) {
         val options: Array<AudioTrack> = playlist.tracks.stream().limit(5).toTypedArray()
         Music.eventWaiter.selector {
-            setUser(user)
+            setUser(user.user)
             setType(Selector.Type.REACTIONS)
             setTitle(":musical_note: Please select which song you would like to play:")
             setColor(defaultColor)
@@ -152,7 +153,7 @@ class AudioLoader(
         private const val MAX_SONG_LENGTH: Long = 3900000 //65 minutes
         var queuedSongs: Long = 0
         fun loadAndPlay(
-            user: User,
+            user: Member,
             tc: TextChannel,
             search: String,
             msg: Message,

@@ -1,6 +1,7 @@
 package cf.lucasmellof.senior.core.utils
 
 import cf.lucasmellof.senior.Music
+import cf.lucasmellof.senior.core.manager.database.DatabaseManager
 import me.devoxin.flight.api.Context
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.Permission
@@ -50,9 +51,8 @@ fun progressBar(current: Double, max: Double, size: Int): String {
     return "```[$progressText$emptyProgressText]$percentageText```"
 }
 
-//TODO: Add database to use custom roles
 fun isDJ(member: Member): Boolean {
-    val djRole = member.guild.getRolesByName("DJ", true).firstOrNull()
+    val djRole = member.guild.getRoleById(DatabaseManager(member.guild).getGuildData()!!.djRoleID)
     return member.isOwner || member.hasPermission(Permission.MANAGE_SERVER) || member.hasPermission(Permission.ADMINISTRATOR) || djRole != null && member.roles.contains(
         djRole
     ) || Music.commandClient.ownerIds.contains(member.idLong)

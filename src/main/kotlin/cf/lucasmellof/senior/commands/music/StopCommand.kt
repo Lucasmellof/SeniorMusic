@@ -19,7 +19,7 @@ class StopCommand : MusicCog {
             manager.trackScheduler.stop()
             ctx.send("✅ You cleared ``${manager.trackScheduler.queue.size}`` songs from the queue.")
         } else {
-            ctx.send("You need to be a DJ to use this command.")
+            ctx.send("\uD83D\uDE1F Whoops, you need to be a DJ to use this command.")
         }
     }
 }

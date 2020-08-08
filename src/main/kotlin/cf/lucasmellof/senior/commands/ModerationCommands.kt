@@ -27,7 +27,7 @@ class ModerationCommands : ModerationCog {
             setColor(defaultColor)
             setTitle("\ufe0f Guild configuration")
             setDescription("You can change this setting using ${ctx.trigger}settings [key] [value]")
-            addField("\uD83D\uDD11 Prefix", "``${guild?.prefix ?: coreConfig.token}``", false)
+            addField("\uD83D\uDD11 Prefix", "``${guild?.prefix ?: coreConfig.defaultPrefix}``", false)
             addField("\uD83C\uDFA7 Dj Role", "``${prefix}``", false)
         }
     }
@@ -57,7 +57,7 @@ class ModerationCommands : ModerationCog {
     fun djrole(ctx: Context, @Greedy role: Role?) {
         DatabaseManager.guilds.updateOne(
             Guild::id eq ctx.guild!!.id, setValue(
-                Guild::djRoleID, role?.id
+                Guild::djRoleID, role?.idLong
             )
         )
         val result = role?.let { it.asMention } ?: "default"

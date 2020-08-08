@@ -1,12 +1,12 @@
 package cf.lucasmellof.senior.commands.music
 
+import cf.lucasmellof.senior.core.manager.database.DatabaseManager
 import cf.lucasmellof.senior.core.manager.music.AudioLoader
 import cf.lucasmellof.senior.core.manager.music.AudioUtils
 import cf.lucasmellof.senior.core.utils.category.MusicCog
 import cf.lucasmellof.senior.core.utils.defaultColor
 import cf.lucasmellof.senior.core.utils.extensions.guildManager
 import cf.lucasmellof.senior.core.utils.extensions.selfMember
-import cf.lucasmellof.senior.core.utils.extensions.user
 import cf.lucasmellof.senior.core.utils.extensions.voiceChannel
 import me.devoxin.flight.api.Context
 import me.devoxin.flight.api.annotations.Command
@@ -44,7 +44,7 @@ class PlayCommand : MusicCog {
             } else "ytsearch: $result"
         }
         if (AudioUtils.connect(ctx.textChannel, ctx.member)) AudioLoader.loadAndPlay(
-            ctx.user!!,
+            ctx.member!!,
             ctx.textChannel!!,
             result,
             ctx.message,
@@ -57,7 +57,7 @@ class PlayCommand : MusicCog {
         val djRole = member.guild.getRolesByName("DJ", true).stream().findFirst().orElse(null)
         return member.isOwner || member.hasPermission(Permission.MANAGE_SERVER) || member.hasPermission(Permission.ADMINISTRATOR) || djRole != null && member.roles.contains(
             djRole
-        )
+        ) || member.roles.contains(member.guild.getRoleById(DatabaseManager(member.guild).getGuildData()!!.djRoleID))
     }
 
     private fun resume(ctx: Context) {

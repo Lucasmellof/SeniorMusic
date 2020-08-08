@@ -7,5 +7,5 @@ data class Guild(
     val id: String,
     val prefix: String = "!",
     val volume: Int = 10,
-    val djRoleID: String = ""
+    val djRoleID: Long = 0L
 )

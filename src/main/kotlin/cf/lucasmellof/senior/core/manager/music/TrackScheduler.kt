@@ -183,6 +183,7 @@ class TrackScheduler(var audioPlayer: AudioPlayer, var guild: Guild) : AudioEven
                 if (guild.selfMember
                         .hasPermission(Permission.MESSAGE_HISTORY)
                 ) channel.editMessageById(lastMessageId, msg).queue() else channel.sendMessage(msg).queue()
+                leave()
                 AudioLoader.minusQueuedSongs()
             }
         } catch (ignored: Exception) {

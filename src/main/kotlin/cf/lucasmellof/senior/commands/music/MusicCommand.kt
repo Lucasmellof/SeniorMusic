@@ -5,7 +5,10 @@ import cf.lucasmellof.senior.core.manager.music.AudioUtils
 import cf.lucasmellof.senior.core.manager.music.TrackScheduler
 import cf.lucasmellof.senior.core.utils.category.MusicCog
 import cf.lucasmellof.senior.core.utils.defaultColor
-import cf.lucasmellof.senior.core.utils.extensions.*
+import cf.lucasmellof.senior.core.utils.extensions.eventWaiter
+import cf.lucasmellof.senior.core.utils.extensions.guildManager
+import cf.lucasmellof.senior.core.utils.extensions.musicManager
+import cf.lucasmellof.senior.core.utils.extensions.send
 import cf.lucasmellof.senior.core.utils.isDJ
 import cf.lucasmellof.senior.core.utils.progressBar
 import me.devoxin.flight.api.Context
@@ -80,7 +83,7 @@ class MusicCommand : MusicCog {
                         }, Consumer {
                             waitForMessage(ctx, it.id, Consumer { s ->
                                 if (AudioUtils.connect(ctx.textChannel, ctx.member)) AudioLoader.loadAndPlay(
-                                    ctx.user!!,
+                                    ctx.member!!,
                                     ctx.textChannel!!,
                                     s,
                                     ctx.message,
@@ -172,7 +175,7 @@ class MusicCommand : MusicCog {
                         }, Consumer {
                             waitForMessage(ctx, it.id, Consumer { s ->
                                 if (AudioUtils.connect(ctx.textChannel, ctx.member)) AudioLoader.loadAndPlay(
-                                    ctx.user!!,
+                                    ctx.member!!,
                                     ctx.textChannel!!,
                                     s,
                                     ctx.message,

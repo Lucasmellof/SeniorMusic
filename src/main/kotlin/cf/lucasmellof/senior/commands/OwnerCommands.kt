@@ -1,4 +1,4 @@
-package cf.lucasmellof.senior.commands.owner
+package cf.lucasmellof.senior.commands
 
 import cf.lucasmellof.senior.Music
 import cf.lucasmellof.senior.core.manager.database.DatabaseManager
@@ -14,7 +14,7 @@ import kotlin.system.exitProcess
 /* 
  * @author Lucasmellof, Lucas de Mello Freitas created on 06/08/2020
  */
-class OwnerCommand : OwnerCog {
+class OwnerCommands : OwnerCog {
     @Command(developerOnly = true)
     fun restart(ctx: Context, @Greedy value: Int?) {
         ctx.send {
@@ -63,8 +63,10 @@ class OwnerCommand : OwnerCog {
     @Command(developerOnly = true)
     fun fixdb(ctx: Context) {
         Music.shardManager.guilds.forEach {
-            DatabaseManager.guilds.insertOne(Guild(ctx.guild!!.id))
-            ctx.send("✅ Added ${it.name}(${it.id}) to the database")
+            if (DatabaseManager(it).getGuildData() == null) {
+                DatabaseManager.guilds.insertOne(Guild(it.id))
+                ctx.send("✅ Added ${it.name}(${it.id}) to the database")
+            }
         }
     }
 }
