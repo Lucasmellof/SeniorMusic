@@ -48,12 +48,16 @@ dependencies {
     implementation("org.slf4j:slf4j-api:1.7.30")
     implementation("ch.qos.logback:logback-classic:1.2.3")
 
+    //[DATABASE]
+    implementation("org.litote.kmongo:kmongo:4.0.3")
+
     //[AUDIO]
     implementation("com.sedmelluq:lavaplayer:1.3.50")
 
     //[LIBRARY]
     implementation("commons-io:commons-io:2.7")
     implementation("org.apache.commons:commons-lang3:3.8.1")
+    implementation("com.google.code.gson:gson:2.8.6")
 }
 
 tasks.withType<KotlinCompile> {

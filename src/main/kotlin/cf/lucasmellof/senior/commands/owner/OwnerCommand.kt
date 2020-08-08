@@ -1,6 +1,8 @@
 package cf.lucasmellof.senior.commands.owner
 
 import cf.lucasmellof.senior.Music
+import cf.lucasmellof.senior.core.manager.database.DatabaseManager
+import cf.lucasmellof.senior.core.manager.database.Guild
 import cf.lucasmellof.senior.core.utils.category.OwnerCog
 import cf.lucasmellof.senior.core.utils.defaultColor
 import cf.lucasmellof.senior.core.utils.extensions.shardManager
@@ -55,6 +57,13 @@ class OwnerCommand : OwnerCog {
                     true
                 )
             }
+        }
+    }
+
+    @Command(developerOnly = true)
+    fun fixdb(ctx: Context) {
+        Music.shardManager.guilds.forEach {
+            DatabaseManager.guilds.insertOne(Guild(ctx.guild!!.id))
         }
     }
 }
