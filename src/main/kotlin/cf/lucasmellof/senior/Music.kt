@@ -2,7 +2,9 @@ package cf.lucasmellof.senior
 
 import cf.lucasmellof.senior.core.manager.EventManager
 import cf.lucasmellof.senior.core.manager.config.coreConfig
+import cf.lucasmellof.senior.core.manager.database.DatabaseManager
 import cf.lucasmellof.senior.core.manager.music.MusicManager
+import cf.lucasmellof.senior.core.utils.NewPrefixProvider
 import com.jagrosh.jdautilities.waiter.EventWaiter
 import me.devoxin.flight.api.CommandClient
 import me.devoxin.flight.api.CommandClientBuilder
@@ -45,6 +47,7 @@ object Music {
         setupFlight()
         setupEventWaiter()
         setupAudio()
+        DatabaseManager.initialize()
         loadShardManager()
 
     }
@@ -63,6 +66,7 @@ object Music {
             .registerDefaultParsers()
             .setOwnerIds(*coreConfig.ownerIDs)
             .configureDefaultHelpCommand { enabled = false }
+            .setPrefixProvider(NewPrefixProvider())
             .build()
         commandClient.commands.register("cf.lucasmellof.senior.commands")
         commandClient.commands

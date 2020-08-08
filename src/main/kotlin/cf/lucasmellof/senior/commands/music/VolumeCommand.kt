@@ -1,5 +1,7 @@
 package cf.lucasmellof.senior.commands.music
 
+import cf.lucasmellof.senior.core.manager.database.DatabaseManager
+import cf.lucasmellof.senior.core.manager.database.Guild
 import cf.lucasmellof.senior.core.manager.music.AudioUtils
 import cf.lucasmellof.senior.core.utils.category.MusicCog
 import cf.lucasmellof.senior.core.utils.defaultColor
@@ -9,6 +11,8 @@ import cf.lucasmellof.senior.core.utils.progressBar
 import me.devoxin.flight.api.Context
 import me.devoxin.flight.api.annotations.Command
 import me.devoxin.flight.api.annotations.Greedy
+import org.litote.kmongo.eq
+import org.litote.kmongo.setValue
 import java.util.function.Consumer
 
 /* 
@@ -49,7 +53,11 @@ class VolumeCommand : MusicCog {
 
             val progress = progressBar(value.toDouble(), 100.0, 20)
             ctx.guildManager!!.audioPlayer.volume = value
-            //TODO: DATABASE
+            DatabaseManager.guilds.updateOne(
+                Guild::id eq ctx.guild!!.id, setValue(
+                    Guild::volume, value
+                )
+            )
             ctx.send({
                 setColor(defaultColor)
                 setTitle("${AudioUtils.volumeIcon(value)} Volume")

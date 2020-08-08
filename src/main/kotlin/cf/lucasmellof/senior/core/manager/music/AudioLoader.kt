@@ -1,6 +1,7 @@
 package cf.lucasmellof.senior.core.manager.music
 
 import cf.lucasmellof.senior.Music
+import cf.lucasmellof.senior.core.manager.database.DatabaseManager
 import cf.lucasmellof.senior.core.utils.defaultColor
 import cf.lucasmellof.senior.core.utils.toTypedArray
 import com.jagrosh.jdautilities.menu.Selector
@@ -120,7 +121,7 @@ class AudioLoader(
             title,
             getLength(length)
         ).queue()
-        manager.audioPlayer.volume = 20
+        manager.audioPlayer.volume = DatabaseManager(channel.guild).getGuildData()!!.volume
     }
 
     private fun onSearch(playlist: AudioPlaylist) {

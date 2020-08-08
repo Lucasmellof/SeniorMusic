@@ -37,7 +37,7 @@ class PlayCommand : MusicCog {
             result = if (args.startsWith("soundcloud")) {
                 val name = args.substring("soundcloud".length).trim { it <= ' ' }
                 if (name.isEmpty()) {
-                    ctx.send("Você precisa me dizer o nome de música ou o URL. Não tenho bola de cristal.")
+                    ctx.send("Enter the URL or name of the song!")
                     return
                 }
                 "scsearch: $result"

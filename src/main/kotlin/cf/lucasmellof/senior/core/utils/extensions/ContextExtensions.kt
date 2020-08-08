@@ -1,6 +1,8 @@
 package cf.lucasmellof.senior.core.utils.extensions
 
 import cf.lucasmellof.senior.Music
+import cf.lucasmellof.senior.core.manager.database.DatabaseManager
+import cf.lucasmellof.senior.core.manager.database.Guild
 import cf.lucasmellof.senior.core.manager.music.GuildMusicManager
 import cf.lucasmellof.senior.core.manager.music.MusicManager
 import com.jagrosh.jdautilities.waiter.EventWaiter
@@ -30,6 +32,8 @@ val Context.shardManager: ShardManager
     get() = Music.shardManager
 val Context.eventWaiter: EventWaiter
     get() = Music.eventWaiter
+val Context.data: Guild?
+    get() = DatabaseManager(guild!!).getGuildData()
 
 fun Context.send(embed: EmbedBuilder.() -> Unit, consumer: Consumer<Message> = Consumer { }) {
     messageChannel.sendMessage(EmbedBuilder().apply(embed).build()).queue(consumer)

@@ -64,6 +64,7 @@ class OwnerCommand : OwnerCog {
     fun fixdb(ctx: Context) {
         Music.shardManager.guilds.forEach {
             DatabaseManager.guilds.insertOne(Guild(ctx.guild!!.id))
+            ctx.send("✅ Added ${it.name}(${it.id}) to the database")
         }
     }
 }
